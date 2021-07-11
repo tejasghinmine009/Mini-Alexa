@@ -29,7 +29,7 @@ def takeCommand():
             cmd = listner.recognize_google(vc)
             cmd = cmd.lower()
             if 'alexa' in cmd:
-                cmd = cmd.replace('alexa','')
+                cmd = cmd.replace('feona','')
     except:
         pass
     return cmd

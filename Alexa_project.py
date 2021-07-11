@@ -2,7 +2,9 @@ import speech_recognition as sr
 import pyttsx3
 import pywhatkit
 import datetime
-from googlesearch import search
+import wikipedia
+import pyjokes
+
 
 
 listner = sr.Recognizer()
@@ -35,6 +37,8 @@ def takeCommand():
 def run_alexa():
     command =  takeCommand()
     print(command)
+    if (command == ' exit'):
+        return 'exit'
     #for playing something on youtube
     if 'play' in command:
         song = command.replace('play','')
@@ -42,15 +46,27 @@ def run_alexa():
         pywhatkit.playonyt(song)
     
     # for time
-    if 'time' in command:
+    elif 'time' in command:
         time = datetime.datetime.now().strftime('%I:%M %p') #format for pm for 24 hr ('%H:%M') 
         talk('time is '+time)
         print(time)
     
-    if 'search' in command:
-        src = command.replace('search','')
-        search(src)
-        talk(src)
-        print(src)
+    elif 'tell me about' in command:
+        srch = command.replace('tell me about','')
+        ress = wikipedia.summary(srch,2)
+        print(ress)
+        talk(ress)
+    
+    elif 'joke' in command:
+        jk = pyjokes.get_joke('en','all')
+        print(jk)
+        talk(jk) 
+    
 
-run_alexa()
+    else:
+        print('please say a command')
+        
+while True:
+    run_alexa()
+    if run_alexa() == 'exit':
+        break
